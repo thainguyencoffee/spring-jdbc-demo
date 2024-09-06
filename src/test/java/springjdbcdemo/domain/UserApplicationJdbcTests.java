@@ -1,10 +1,12 @@
 package springjdbcdemo.domain;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
+import org.springframework.data.mapping.MappingException;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.junit.jupiter.Container;
@@ -36,7 +38,7 @@ public class UserApplicationJdbcTests {
     private JdbcAggregateTemplate jdbcAggregateTemplate;
 
     @Test
-    void test() {
+    void shouldThrows() {
         var u1 = new UserApplication("hanoi", "none",
                 "thainguyencoffee", "Nguyen", "Thai", "test@gmail.com");
         var u2 = new UserApplication("danang", "none",
@@ -47,7 +49,9 @@ public class UserApplicationJdbcTests {
                 "oliverdrotbohm", "Oliver", "Drotbohm", "test@gmail.com");
         jdbcAggregateTemplate.insertAll(List.of(u1, u2, u3, u4));
 
-        repository.findAllByCity("hanoi").forEach(System.out::println);
+        Assertions.assertThatThrownBy(() -> {
+            repository.findAllByCity("hanoi");
+        }).isInstanceOf(MappingException.class);
     }
 
 }
