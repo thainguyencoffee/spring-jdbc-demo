@@ -37,6 +37,8 @@ public class UserApplicationJdbcTests {
     @Autowired
     private JdbcAggregateTemplate jdbcAggregateTemplate;
 
+
+
     @Test
     void shouldThrows() {
         var u1 = new UserApplication("hanoi", "none",
@@ -47,11 +49,19 @@ public class UserApplicationJdbcTests {
                 "joshlong", "Long", "Josh", "test@gmail.com");
         var u4 = new UserApplication("hanoi", "phamhung",
                 "oliverdrotbohm", "Oliver", "Drotbohm", "test@gmail.com");
-        jdbcAggregateTemplate.insertAll(List.of(u1, u2, u3, u4));
+        Iterable<UserApplication> userApplications = jdbcAggregateTemplate.insertAll(List.of(u1, u2, u3, u4));
+
+        System.out.println("Insert all users succeed result:");
+        userApplications.forEach(System.out::println);
+
+        Assertions.assertThatThrownBy(() -> {
+            repository.findAll();
+        }).isInstanceOf(MappingException.class);
 
         Assertions.assertThatThrownBy(() -> {
             repository.findAllByCity("hanoi");
         }).isInstanceOf(MappingException.class);
     }
+
 
 }

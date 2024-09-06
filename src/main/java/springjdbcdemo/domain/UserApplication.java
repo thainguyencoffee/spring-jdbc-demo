@@ -1,6 +1,7 @@
 package springjdbcdemo.domain;
 
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.Table;
@@ -9,6 +10,7 @@ import java.util.UUID;
 
 @Table("user_application")
 @Getter
+@ToString
 public class UserApplication {
     @Id
     private UUID id;
@@ -28,6 +30,5 @@ public class UserApplication {
         this.lastName = lastName;
         this.email = new Email(email);
     }
-
 
 }
