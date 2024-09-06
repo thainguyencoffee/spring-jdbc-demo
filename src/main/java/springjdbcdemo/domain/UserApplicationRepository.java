@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface UserApplicationRepository extends CrudRepository<UserApplication, UUID> {
 
-    @Query("select u from user_application u where city = :city")
+    @Query("select u.* from user_application u where city = :city")
     List<UserApplication> findAllByCity(@Param("city") String city);
 
 }

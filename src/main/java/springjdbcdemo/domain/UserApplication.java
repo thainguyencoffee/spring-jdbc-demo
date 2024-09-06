@@ -31,4 +31,7 @@ public class UserApplication {
         this.email = new Email(email);
     }
 
+    // add default constructor for Spring Data JDBC
+    UserApplication() {
+    }
 }

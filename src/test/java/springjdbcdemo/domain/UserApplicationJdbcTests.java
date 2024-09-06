@@ -54,13 +54,12 @@ public class UserApplicationJdbcTests {
         System.out.println("Insert all users succeed result:");
         userApplications.forEach(System.out::println);
 
-        Assertions.assertThatThrownBy(() -> {
-            repository.findAll();
-        }).isInstanceOf(MappingException.class);
+        System.out.println("Find all users results:");
+        repository.findAll().forEach(System.out::println);
 
-        Assertions.assertThatThrownBy(() -> {
-            repository.findAllByCity("hanoi");
-        }).isInstanceOf(MappingException.class);
+        System.out.println("Find all users by city results:");
+        repository.findAllByCity("hanoi").forEach(System.out::println);
+
     }
 
 
